@@ -342,6 +342,7 @@
         
         ace.edit("js-editor").getSession().setValue(js2);
     });
+    $("#btnTidyUp").click();
 
     var lastEditor = $('#html-editor');
     var vh = getEditorsHeight();
