@@ -1,0 +1,117 @@
+﻿<div class="editors">
+    <!-- Preview -->
+    <div class="resultContainer">
+        <iframe id="preview" name="result" sandbox="allow-forms allow-popups allow-scripts allow-same-origin" frameborder="0">
+            #document
+        </iframe>
+    </div>
+    <!-- HTML Editor -->
+    <div class="editorContainer">
+        <div class="editorLabel">HTML</div>
+        <div class="editor" id="html-editor">
+            <xmp>
+                <!-- this is how you make a comment in html -->
+                <!-- this is the div tag. we are going to "style" it to look like a ball in css -->
+                <div id='ball'></div>
+
+            </xmp>
+        </div>
+    </div>
+    <!-- CSS EDitor -->
+    <div class="editorContainer">
+        <div class="editorLabel">CSS</div>
+        <div class="editor" id="css-editor">
+            <xmp>
+                /*this is how you make a comment in css */
+
+                /*let's style the div tag, that has an id='ball' (see above ^^) */
+                #ball
+                {
+                background: red;
+                -moz-border-radius: 50px;
+                -webkit-border-radius: 50px;
+                border-radius: 50px;
+                position:absolute;
+                }
+            </xmp>
+
+        </div>
+    </div>
+    <!-- JS Editor -->
+    <div class="editorContainer">
+        <div class="editorLabel">JavaScript</div>
+        <div class="editor" id="js-editor">
+            <xmp>
+                var ball = document.getElementById('ball');
+                var x = 0;
+                var y = 0;
+                var width = 30;
+                var height = 30;
+                var speed = 3;
+                var directionX = speed;
+                var directionY = speed;
+
+                //Look! You can change css inside javascript!
+                //we need to add 'px' on the end
+                //to tell the css to make the ball 100 "pixels"
+                ball.style.width = width + 'px';
+                ball.style.height = height + 'px';
+
+
+                function moveBall()
+                {
+                x += directionX;
+                y += directionY;
+                ball.style.left =  x + 'px';
+                ball.style.top =  y + 'px';
+
+                if(x >= window.innerWidth - width)
+                {
+                directionX = -speed;
+                }
+                if(x <= 0)
+                {
+                directionX = speed;
+                }
+
+                if(y >= window.innerHeight - height)
+                {
+                directionY = -speed;
+                }
+                if(y <= 0)
+                {
+                directionY = speed;
+                }
+                }
+
+                setInterval(moveBall, 10);
+            </xmp>
+        </div>
+    </div>
+</div>
+
+<!-- Set Editor Modes -->
+<script>
+        ace.require("ace/ext/language_tools");
+
+        var htmlEditor = ace.edit("html-editor");
+        //htmlEditor.setTheme("ace/theme/crimson-editor");
+        htmlEditor.getSession().setMode("ace/mode/html");
+        htmlEditor.setOptions({
+            enableBasicAutocompletion: true
+        });
+
+        var cssEditor = ace.edit("css-editor");
+        //cssEditor.setTheme("ace/theme/crimson-editor");
+        cssEditor.getSession().setMode("ace/mode/css");
+        cssEditor.setOptions({
+            enableBasicAutocompletion: true
+        });
+
+        var jsEditor = ace.edit("js-editor");
+        //jsEditor.setTheme("ace/theme/crimson-editor");
+        jsEditor.getSession().setMode("ace/mode/javascript");
+        jsEditor.setOptions({
+            enableBasicAutocompletion: true
+        });
+</script>

@@ -345,6 +345,7 @@
     $("#btnTidyUp").click();
 
     var lastEditor = $('#html-editor');
+    jaxi.currentEditor = ace.edit(lastEditor.attr('id'));
     var vh = getEditorsHeight();
     lastEditor.css('height', vh);
     $("#preview").css('height', $(".editors").height() - 50);
@@ -355,14 +356,13 @@
     }
 
     $(".editor").click(function (event) {
-     
         if ($(this).attr('id') != lastEditor.attr('id'))
         {
-            lastEditor.animate({ height: 150 }, 300);
+            lastEditor.animate({ height: 150 }, EDITOR_TRANSITION_TIME);
 
             vh = getEditorsHeight();
 
-            $(this).animate({ height: vh }, 300, function () {
+            $(this).animate({ height: vh }, EDITOR_TRANSITION_TIME, function () {
                 var htmlEditor = ace.edit("html-editor");
                 htmlEditor.resize(true);
 
@@ -374,6 +374,7 @@
             });
 
             lastEditor = $(this);
+            jaxi.currentEditor = ace.edit(lastEditor.attr('id'));
         }
 
 
