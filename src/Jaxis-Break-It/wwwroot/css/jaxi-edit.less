@@ -1,3 +1,5 @@
+@import "variables.less";
+
 body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 12px;
@@ -16,7 +18,7 @@ body {
     margin: 0px 0px 0 0px;
     padding: 10px;
     position: relative;
-    background: #F6F6F6;
+    background: #111111;
     height: 100vh;
 }
 
@@ -34,14 +36,15 @@ body {
 .editorLabel{
     padding: 4px;
     -webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;
-    background-color:#f196b7;
+    background-color:@light-purple;
     position:absolute;
     z-index:10;
     right: 6px;
     top: 6px;
     color:#FFFFFF;
     font-weight: 500;
-
+    font-size:11px;
+    opacity:.7;
 }
 
 .resultContainer {
@@ -85,7 +88,7 @@ body {
 }
 
 .navbar-default-jaxi {
-    background: #808080;
+    background: @dark-purple;
     border-color: #cecece;
     border-radius: 0px;
     border: none;
@@ -104,7 +107,7 @@ body {
 }
 
 .navbar-default-jaxi ul li {
-    background: #f196b7;
+    background: @light-purple;
     margin-right: 1px;
 }
 
@@ -113,7 +116,7 @@ body {
 }
 
 .navbar-default-jaxi .navbar-nav>li>a:hover {
-    color: #cecece;
+    color: @light-purple;
 }
 
 .panel-group .panel {

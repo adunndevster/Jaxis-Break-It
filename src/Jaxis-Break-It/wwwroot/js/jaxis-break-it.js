@@ -54,7 +54,7 @@ window.onload = function () {
 
         jaxi.pointAtSomething = pointAtSomething;
 
-        setTimeout(pointAtSomething.bind(null, 'ball', '#js-editor'), 2000)
+        //setTimeout(pointAtSomething.bind(null, 'ball', '#js-editor'), 2000)
 
     })();
 };

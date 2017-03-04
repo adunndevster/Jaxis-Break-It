@@ -383,7 +383,6 @@
     window.onresize = function()
     {
         vh = getEditorsHeight();
-
         lastEditor.css('height', vh);
 
         var htmlEditor = ace.edit("html-editor");
