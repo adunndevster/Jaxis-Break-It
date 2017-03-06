@@ -6,63 +6,90 @@ var MODAL_LEFT = 400;
 var jaxi = new Object();
 var guide;
 jaxi.currentEditor = null;
+var tour;
 
 $(document).ready(function($){
+    (function () {
 
-    // Instance the tour
-    var tour = new Tour({
-        steps: [
-        {
-            element: "#js-editor",
-            title: "Title of my step",
-            content: "Content of my step",
-            backdrop: true,
-            backdropContainer: '.editorContainer',
-            backdropPadding: false
-        },
-        {
-            element: "#html-editor",
-            title: "Title of my step",
-            content: "Content of my step"
-        }
-        ]
-    });
+        // Instance the tour
+        tour = new Tour({
+            steps: [
+            {
+                element: "#html-editor",
+                title: "Editors",
+                content: "This is the HTML editor."
+            },
+            {
+                element: "#css-editor",
+                title: "Editors",
+                content: "This is the CSS editor."
+            },
+            {
+                element: "#js-editor",
+                title: "Editors",
+                content: "This is the javascript editor."
+            },
+            {
+                element: ".jaxi-modal",
+                title: "variables",
+                content: "This is the ball variable.",
+                orphan: false,
+                code: 'ball',
+                panel: '#js-editor'
 
-    // Initialize the tour
-    tour.init();
-
-    // Start the tour
-    tour.start();
-
-    const Child = {
-        template: '#childarea'
-    };
-
-    guide = new Vue({
-        el: '#app',
-        data() {
-            return {
-                isShowing: false,
-                modalLeft: '0px',
-                modalTop: '0px'
+            },
+            {
+                element: "#js-editor",
+                title: "Editors",
+                content: "This is the javascript editor."
             }
-        },
-        methods: {
-            toggleShow() {
-                this.isShowing = !this.isShowing;
+            ],
+            onNext: function(tour){
+                var stepNum = tour.getCurrentStep() + 1;
+                var step = tour.getStep(stepNum);
+                if(step.code !== undefined)
+                {
+                    jaxi.pointAtSomething(step.code, step.panel);
+                    sleep(EDITOR_TRANSITION_TIME);
+                    tour.redraw();
+                }
             }
-        },
-        components: {
-            appChild: Child
-        }
-    });
+        });
+
+        // Initialize the tour
+        tour.init();
+
+        // Start the tour
+        tour.start(true);
+
+        const Child = {
+            template: '#childarea'
+        };
+
+        guide = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    isShowing: true,
+                    modalLeft: '0px',
+                    modalTop: '0px'
+                }
+            },
+            methods: {
+                toggleShow() {
+                    this.isShowing = !this.isShowing;
+                }
+            },
+            components: {
+                appChild: Child
+            }
+        });
 
     
 
 
 
-    (function () {
-
+    
 
         async function pointAtSomething(code, panel) {
             $(panel).click();
@@ -72,9 +99,8 @@ $(document).ready(function($){
             jaxi.currentEditor.addSelectionMarker(range);
             await sleep(EDITOR_TRANSITION_TIME);
             var coords = jaxi.currentEditor.renderer.textToScreenCoordinates(range.start.row, range.end.column);
-            guide.modalLeft = EDITOR_TRANSITION_TIME + 'px';
-            guide.modalTop = coords.pageY + 'px';
-            guide.isShowing = true;
+            guide.modalLeft = coords.pageX + 5 + 'px';
+            guide.modalTop = coords.pageY + 12 + 'px';
 
         }
 
