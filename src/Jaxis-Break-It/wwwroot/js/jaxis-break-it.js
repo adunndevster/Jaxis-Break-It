@@ -6,7 +6,34 @@ var MODAL_LEFT = 400;
 var jaxi = new Object();
 var guide;
 jaxi.currentEditor = null;
-window.onload = function () {
+
+$(document).ready(function($){
+
+    // Instance the tour
+    var tour = new Tour({
+        steps: [
+        {
+            element: "#js-editor",
+            title: "Title of my step",
+            content: "Content of my step",
+            backdrop: true,
+            backdropContainer: '.editorContainer',
+            backdropPadding: false
+        },
+        {
+            element: "#html-editor",
+            title: "Title of my step",
+            content: "Content of my step"
+        }
+        ]
+    });
+
+    // Initialize the tour
+    tour.init();
+
+    // Start the tour
+    tour.start();
+
     const Child = {
         template: '#childarea'
     };
@@ -29,7 +56,6 @@ window.onload = function () {
             appChild: Child
         }
     });
-
 
     
 
@@ -57,7 +83,8 @@ window.onload = function () {
         //setTimeout(pointAtSomething.bind(null, 'ball', '#js-editor'), 2000)
 
     })();
-};
+
+});
 
 
 
