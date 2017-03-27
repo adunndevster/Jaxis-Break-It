@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Jaxis_Break_It.Data;
 using Jaxis_Break_It.Models;
 using Jaxis_Break_It.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Jaxis_Break_It
 {
@@ -52,7 +53,11 @@ namespace Jaxis_Break_It
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.SslPort = 44300;
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -85,6 +90,11 @@ namespace Jaxis_Break_It
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+            app.UseFacebookAuthentication(new FacebookOptions()
+            {
+                AppId = "235909530211479",
+                AppSecret = "bf5784df45e0da1ccf98ded7860f90f7"
+            });
 
             app.UseMvc(routes =>
             {
