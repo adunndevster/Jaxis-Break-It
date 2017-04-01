@@ -9,8 +9,13 @@ var guide;
 jaxi.currentEditor = null;
 var tour;
 
+
+
 $(document).ready(function($){
     (function () {
+
+        var codeTracker = Object();
+        codeTracker.steps = new Array();
 
         // Instance the tour
         tour = new Tour({
@@ -48,7 +53,7 @@ $(document).ready(function($){
             {
                 element: "#html-editor",
                 title: "Let's Code!",
-                content: "Let’s start building this sucker! Type the following code into the HTML editor:<br><br><xmp><div id=\'ball\'><\/div></xmp>"
+                content: "Let’s start building this sucker! Type the following code into the HTML editor:<br><br><code><xmp><div id=\'ball\'><\/div></xmp></code>"
             },
             {
                 element: "#html-editor",
@@ -71,7 +76,7 @@ $(document).ready(function($){
             {
                 element: "#css-editor",
                 title: "Let's Style!",
-                content: "Now type this into the CSS code panel. Our app doesn’t look like anything yet because we haven’t styled it. That’s what we do here in the CSS.<br><br><xmp>#ball {\r\n    background: red;\r\n    -moz-border-radius: 50px;\r\n    -webkit-border-radius: 50px;\r\n    border-radius: 50px;\r\n    width: 30px;\r\n    height: 30px;\r\n    position: absolute;\r\n}</xmp>"
+                content: "Now type this into the CSS code panel. Our app doesn’t look like anything yet because we haven’t styled it. That’s what we do here in the CSS.<br><br><code><xmp>#ball {\r\n    background: red;\r\n    -moz-border-radius: 50px;\r\n    -webkit-border-radius: 50px;\r\n    border-radius: 50px;\r\n    width: 30px;\r\n    height: 30px;\r\n    position: absolute;\r\n}</xmp></code>"
             },
             {
                 element: "#css-editor",
@@ -149,7 +154,7 @@ $(document).ready(function($){
             {
                 element: "#js-editor",
                 title: "Code :)",
-                content: "Copy the following code into the Javascript editor.<br><br><xmp>var ball = document.getElementById(\'ball\');\r\nvar x = 0;\r\nvar y = 0;\r\nvar width = 30;\r\nvar height = 30;\r\nvar speed = 3;\r\nvar directionX = speed;\r\nvar directionY = speed;\r\n\r\n\/\/Look! You can change css inside javascript!\r\n\/\/we need to add \'px\' on the end\r\n\/\/to tell the css to make the ball 100 \"pixels\"\r\nball.style.width = width + \'px\';\r\nball.style.height = height + \'px\';\r\n\r\n\r\nfunction moveBall() {\r\n    x += directionX;\r\n    y += directionY;\r\n    ball.style.left = x + \'px\';\r\n    ball.style.top = y + \'px\';\r\n\r\n    if (x >= window.innerWidth - width) {\r\n        directionX = -speed;\r\n    }\r\n    if (x <= 0) {\r\n        directionX = speed;\r\n    }\r\n\r\n    if (y >= window.innerHeight - height) {\r\n        directionY = -speed;\r\n    }\r\n    if (y <= 0) {\r\n        directionY = speed;\r\n    }\r\n}\r\n\r\nsetInterval(moveBall, 10);</xmp>"
+                content: "Copy the following code into the Javascript editor.<br><br><code><xmp>var ball = document.getElementById(\'ball\');\r\nvar x = 0;\r\nvar y = 0;\r\nvar width = 30;\r\nvar height = 30;\r\nvar speed = 3;\r\nvar directionX = speed;\r\nvar directionY = speed;\r\n\r\n\/\/Look! You can change css inside javascript!\r\n\/\/we need to add \'px\' on the end\r\n\/\/to tell the css to make the ball 100 \"pixels\"\r\nball.style.width = width + \'px\';\r\nball.style.height = height + \'px\';\r\n\r\n\r\nfunction moveBall() {\r\n    x += directionX;\r\n    y += directionY;\r\n    ball.style.left = x + \'px\';\r\n    ball.style.top = y + \'px\';\r\n\r\n    if (x >= window.innerWidth - width) {\r\n        directionX = -speed;\r\n    }\r\n    if (x <= 0) {\r\n        directionX = speed;\r\n    }\r\n\r\n    if (y >= window.innerHeight - height) {\r\n        directionY = -speed;\r\n    }\r\n    if (y <= 0) {\r\n        directionY = speed;\r\n    }\r\n}\r\n\r\nsetInterval(moveBall, 10);</xmp></code>"
             },
             {
                 element: "#btnRun",
@@ -222,7 +227,15 @@ $(document).ready(function($){
 
             if(step === undefined) return;
 
+            
+
             $(step.element).click();
+
+            if(step.content.indexOf('<code>') != -1)
+            {
+                insertCode(step.content.substring(step.content.indexOf('<xmp>')+5, step.content.indexOf('</xmp>')));
+            }
+
             if(step.code !== undefined)
             {
                 jaxi.pointAtSomething(step.code, step.panel);
@@ -264,12 +277,24 @@ $(document).ready(function($){
 
     
 
+        function insertCode(code) {
+            
+            //make sure we don't add this code in the future.
+            var stepNum = tour.getCurrentStep()+1;
+            if($.inArray(stepNum, codeTracker.steps) == -1 )
+            {
+                codeTracker.steps.push(stepNum);
+                jaxi.currentEditor.focus();
+                jaxi.currentEditor.insert(code);
+            }
+        }
+
         async function pointAtSomething(code, panel) {
             $(panel).click();
             jaxi.currentEditor.focus();
-            jaxi.currentEditor.clearSelection();
+            //jaxi.currentEditor.exitMultiSelectMode();
             var range = jaxi.currentEditor.find(code);
-            jaxi.currentEditor.addSelectionMarker(range);
+            //jaxi.currentEditor.addSelectionMarker(range);
             await sleep(EDITOR_TRANSITION_TIME);
             var coords = jaxi.currentEditor.renderer.textToScreenCoordinates(range.start.row, range.end.column);
             guide.modalLeft = coords.pageX + 5 + 'px';
@@ -277,6 +302,7 @@ $(document).ready(function($){
         }
 
         jaxi.pointAtSomething = pointAtSomething;
+        jaxi.insertCode = insertCode;
 
         //setTimeout(pointAtSomething.bind(null, 'ball', '#js-editor'), 2000)
 
