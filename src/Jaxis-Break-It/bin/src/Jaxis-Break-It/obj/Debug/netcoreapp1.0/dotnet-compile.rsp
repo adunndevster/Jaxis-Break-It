@@ -239,11 +239,11 @@ C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Contro
 C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Controllers\HomeController.cs
 C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Controllers\ManageController.cs
 C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Data\ApplicationDbContext.cs
-C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Data\Test.cs
+C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Data\Lab.cs
 C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Data\Migrations\00000000000000_CreateIdentitySchema.cs
 C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs
-C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Data\Migrations\20170401213325_Test.cs
-C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Data\Migrations\20170401213325_Test.Designer.cs
+C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Data\Migrations\20170402021947_Added-Labs-Table.cs
+C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Data\Migrations\20170402021947_Added-Labs-Table.Designer.cs
 C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Data\Migrations\ApplicationDbContextModelSnapshot.cs
 C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Models\ApplicationUser.cs
 C:\Users\adunn\Documents\_Projects\_Fun\Jaxis-Break-It\src\Jaxis-Break-It\Models\AccountViewModels\ExternalLoginConfirmationViewModel.cs

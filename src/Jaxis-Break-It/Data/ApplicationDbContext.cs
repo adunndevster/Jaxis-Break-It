@@ -15,7 +15,7 @@ namespace Jaxis_Break_It.Data
         {
         }
 
-        //public DbSet<Test> Tests { get; set; }
+        public DbSet<Lab> Labs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -25,7 +25,7 @@ namespace Jaxis_Break_It.Data
             // Add your customizations after calling base.OnModelCreating(builder);
 
 
-            //builder.Entity<Test>().ToTable("Test");
+            builder.Entity<Lab>().ToTable("Labs");
         }
     }
 }
