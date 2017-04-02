@@ -1,0 +1,77 @@
+@model Jaxis_Break_It.Data.Lab
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Lab</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="CSS" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CSS" class="form-control" />
+                <span asp-validation-for="CSS" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="HTML" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="HTML" class="form-control" />
+                <span asp-validation-for="HTML" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="JS" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="JS" class="form-control" />
+                <span asp-validation-for="JS" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Slug" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Slug" class="form-control" />
+                <span asp-validation-for="Slug" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Title" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TourJSON" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TourJSON" class="form-control" />
+                <span asp-validation-for="TourJSON" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
