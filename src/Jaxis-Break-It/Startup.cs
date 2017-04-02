@@ -13,6 +13,7 @@ using Jaxis_Break_It.Data;
 using Jaxis_Break_It.Models;
 using Jaxis_Break_It.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 
 namespace Jaxis_Break_It
 {
@@ -55,7 +56,7 @@ namespace Jaxis_Break_It
 
             services.AddMvc(options =>
             {
-                options.SslPort = 44300;
+               // options.SslPort = 44300;
                 options.Filters.Add(new RequireHttpsAttribute());
             });
 
@@ -103,5 +104,7 @@ namespace Jaxis_Break_It
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        
     }
 }
