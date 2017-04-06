@@ -40,7 +40,7 @@ namespace Jaxis_Break_It.Data.Migrations
                         .HasAnnotation("MaxLength", 255);
 
                     b.Property<string>("TourJSON")
-                        .HasAnnotation("MaxLength", 4096);
+                        .HasAnnotation("MaxLength", 8192);
 
                     b.HasKey("Id");
 

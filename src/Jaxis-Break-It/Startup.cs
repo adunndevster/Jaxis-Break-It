@@ -21,7 +21,7 @@ namespace Jaxis_Break_It
     {
         public Startup(IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
+           var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
@@ -63,6 +63,12 @@ namespace Jaxis_Break_It
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            //Security
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,8 +109,61 @@ namespace Jaxis_Break_It
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            CreateRolesandUsers();
         }
 
-        
+        // In this method we will create default User roles and Admin user for login   
+        private async void CreateRolesandUsers()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>();
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            var db = new ApplicationDbContext(options.Options);
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db), null, null, null, null, null);
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db), null, null, null, null, null, null, null, null);
+
+
+            // In Startup iam creating first Admin Role and creating a default Admin User    
+            if (!await roleManager.RoleExistsAsync("Admin"))
+            {
+
+                // first we create Admin rool   
+                var role = new Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole();
+                role.Name = "Admin";
+                await roleManager.CreateAsync(role);
+            }
+
+
+            //Here we create a Admin super user who will maintain the website
+            //var user = new ApplicationUser();
+            //user.UserName = "";
+            //user.Email = "";
+            //if (!await UserManager.IsInRoleAsync(user, "Admin"))
+            //{
+            //    string userPWD = "";
+
+            //    var chkUser = await UserManager.CreateAsync(user, userPWD);
+
+            //    //Add default User to Role Admin   
+            //    if (chkUser.Succeeded)
+            //    {
+                    //var result1 = await UserManager.AddToRoleAsync(user, "Admin");
+
+            //    }
+            //}
+
+
+            ////example role creations
+            //// creating Creating Manager role    
+            //if (!await roleManager.RoleExistsAsync("Manager"))
+            //{
+            //    var role = new Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole();
+            //    role.Name = "Manager";
+            //    await roleManager.CreateAsync(role);
+
+            //}
+
+        }
     }
 }

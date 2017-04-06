@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Jaxis_Break_It.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class AdminLabsController : Controller
     {
         private readonly ApplicationDbContext _context;

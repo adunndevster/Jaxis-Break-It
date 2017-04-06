@@ -31,7 +31,7 @@ namespace Jaxis_Break_It.Data
         [StringLength(8192)]
         public string JS { get; set; }
 
-        [StringLength(4096)]
+        [StringLength(8192)]
         public string TourJSON { get; set; }
     }
 }

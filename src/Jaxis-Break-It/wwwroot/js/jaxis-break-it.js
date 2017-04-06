@@ -17,7 +17,21 @@ $(document).ready(function($){
         var codeTracker = Object();
         codeTracker.steps = new Array();
 
-        // Instance the tour
+        tour = new Tour(
+            {
+                steps: [],
+                autoscroll: false,
+                    onHide: onHide,
+                    onPrev: onHide
+            });
+
+        if(arrTour != undefined)
+        {
+            tour.addSteps(arrTour);
+        }
+        
+
+        //// Instance the tour
         tour = new Tour({
             steps: [
             {
@@ -252,24 +266,24 @@ $(document).ready(function($){
             template: '#childarea'
         };
 
-        guide = new Vue({
-            el: '#app',
-            data() {
-                return {
-                    isShowing: true,
-                    modalLeft: '0px',
-                    modalTop: '0px'
-                }
-            },
-            methods: {
-                toggleShow() {
-                    this.isShowing = !this.isShowing;
-                }
-            },
-            components: {
-                appChild: Child
-            }
-        });
+        //guide = new Vue({
+        //    el: '#app',
+        //    data() {
+        //        return {
+        //            isShowing: true,
+        //            modalLeft: '0px',
+        //            modalTop: '0px'
+        //        }
+        //    },
+        //    methods: {
+        //        toggleShow() {
+        //            this.isShowing = !this.isShowing;
+        //        }
+        //    },
+        //    components: {
+        //        appChild: Child
+        //    }
+        //});
 
     
 
@@ -304,24 +318,10 @@ $(document).ready(function($){
         jaxi.pointAtSomething = pointAtSomething;
         jaxi.insertCode = insertCode;
 
-        //setTimeout(pointAtSomething.bind(null, 'ball', '#js-editor'), 2000)
 
     })();
 
 });
-
-
-
-
-
-var teachPoint = {
-    find: 'ball',
-    text: "I like goods",
-    character: 'jaxi'
-
-};
-
-
 
 
 

@@ -1,0 +1,31 @@
+@model Jaxis_Break_It.Data.Lab
+
+@{
+    ViewData["Title"] = "Jaxi's Break It!";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @Html.Partial("_Header")
+</head>
+<body>
+
+    <script>
+        var arrTour = @Html.Raw(Model.TourJSON);
+    </script>
+
+
+    <!-- Navbar -->
+    @Html.Partial("_Navbar")
+
+    <!-- Sidebar -->
+    @Html.Partial("_Sidebar")
+
+    <!-- Editors -->
+    @Html.Partial("_Editors")
+
+
+
+</body>
+</html>
