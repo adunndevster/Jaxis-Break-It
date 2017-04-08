@@ -1,4 +1,12 @@
-﻿<nav class="navbar navbar-default-jaxi">
+﻿@using Microsoft.AspNetCore.Mvc.Controllers
+@{ 
+
+    var controllerName = ((ControllerActionDescriptor)ViewContext.ActionDescriptor).ControllerName;
+    var isAuthed = Context.User.Identities.Any(i => i.IsAuthenticated);
+}
+
+
+<nav class="navbar navbar-default-jaxi">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
         <div class="navbar-brand"><span class="glyphicon-jaxi" aria-hidden="true"></span> Jaxi's Break It!</div>
@@ -6,9 +14,25 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="toolbar">
         <ul class="nav navbar-nav">
-            <li id="btnRun"><a href=""><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Run</a></li>
-            <li id="btnTidyUp"><a href=""><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> TidyUp</a></li>
-            <li id="btnTogether"><a href=""><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Collaborate</button></li>
+            @if (controllerName == "Labs")
+            {
+                <li id="btnRun"><a href=""><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Run</a></li>
+                <li id="btnTidyUp"><a href=""><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> TidyUp</a></li>
+                <li id="btnTogether"><a href=""><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Collaborate</a></li>
+            }
+            
         </ul>
+
+        <div class="right-nav">
+            @if (isAuthed)
+            {
+                <img class="user-image" src="~/images/ui/user-icon.png">
+            }
+            else
+            {
+                <a href="/account/login" class="button">Sign in</a>
+            }
+        </div>
+        
     </div><!-- /.navbar-collapse -->
 </nav>
