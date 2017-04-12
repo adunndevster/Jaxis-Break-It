@@ -22,23 +22,19 @@ namespace Jaxis_Break_It.Controllers
 
         // GET: Labs
         [HttpGet("{id}")]
-        public async Task<IActionResult> Index(string id)
+        [Route("")]
+        public async Task<IActionResult> Index(string id = "")
         {
             Lab lab;
 
-            if (id == null)
+            if (String.IsNullOrEmpty(id))
             {
                 lab = new Lab();
             } else
             {
                 lab = await _context.Labs.SingleOrDefaultAsync(m => m.Slug == id);
             }
-
             
-            if (lab == null)
-            {
-                return NotFound();
-            }
 
             return View(lab);
         }

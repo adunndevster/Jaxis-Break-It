@@ -8,11 +8,19 @@
 <html lang="en">
 <head>
     @Html.Partial("_Header")
+    <link rel="stylesheet" href="/css/jaxi-edit.css" type="text/css">
 </head>
 <body>
 
+    <div id="app">
+        <transition name="fade">
+            <div v-if="isShowing" class="jaxi-modal" v-bind:style="{left:modalLeft, top:modalTop}">
+
+            </div>
+        </transition>
+    </div>
     <script>
-        var arrTour = @Html.Raw(Model.TourJSON);
+        var arrTour = @(String.IsNullOrEmpty(Model.TourJSON) ? Html.Raw("[];") : Html.Raw(Model.TourJSON)) 
     </script>
 
 

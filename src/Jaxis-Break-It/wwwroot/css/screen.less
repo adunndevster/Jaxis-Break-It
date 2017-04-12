@@ -1,7 +1,32 @@
 ﻿@import "guide.less"; 
-@import "jaxi-edit.less"; 
 @import "variables.less";
 @import "nav.less"; 
+
+
+body,html{
+    background-color:black;
+    height: 100%;
+    position: relative;
+    min-height: 100%;
+}
+
+h1, h2, h3, h4{
+    color: white;
+}
+
+hr.big {
+	border: solid;
+    height: 2px;
+    color: @dark-purple;
+    background-color: @dark-purple;
+    width:100%;
+    margin-top:0px;
+    margin-bottom:20px;
+}
+
+.column, .columns{
+    margin-left: 0 !important;
+}
 
 /*SCROLL BAR*/
 
@@ -28,3 +53,37 @@
 	background: rgba(0,0,0,0.4); 
 }
 
+.content{
+    max-width: 950px;
+    margin: 60px auto;
+    height:100%;
+
+}
+.content > * {
+        display: block;
+        float:left;
+        margin-top: 50px;
+    }
+
+.content > *:first-child {
+    margin-top: 0px;
+}
+
+
+.feature{
+    padding:8px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background-color:@dark-purple;
+
+    width:100%;
+    min-height: 260px;
+}
+
+
+.footer{
+    min-height: 40px;
+    background-color: #333333;
+    width: 100%;
+}

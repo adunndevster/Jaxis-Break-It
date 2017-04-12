@@ -1,4 +1,46 @@
-﻿.right-nav{
+﻿@import "variables.less";
+
+.navbar-default-jaxi {
+    background: @dark-purple;
+    border-color: #cecece;
+    border-radius: 0px;
+    border: none;
+    height: 44px;
+    margin-bottom: 0px;
+}
+ 
+.navbar-default-jaxi .navbar-brand {
+    width: 217px;
+    margin-right: 0px;
+    color: #fff;
+
+    img{
+        height:35px;
+        margin-top: -8px;
+    }
+}
+
+.navbar-default-jaxi ul li {
+    background: @light-purple;
+    margin-right: 1px;
+}
+
+.navbar-default-jaxi .navbar-nav>li>a {
+    color: #fff;
+}
+
+.navbar-default-jaxi .navbar-nav>li>a:hover {
+    color: @light-purple;
+}
+
+
+.navbar-content
+{
+    max-width:950px;
+    margin: 0 auto;
+}
+
+.right-nav{ 
    clear:right;
     float:right;
     margin-top: 10px;
@@ -20,3 +62,4 @@
     border-radius: 5px;
 
 }
+

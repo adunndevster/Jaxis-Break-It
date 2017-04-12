@@ -10,7 +10,8 @@ module.exports = function (grunt) {
                     optimization: 2
                 },
                 files: {
-                    "src/Jaxis-Break-It/wwwroot/css/screen.css": "src/Jaxis-Break-It/wwwroot/css/screen.less" // destination file and source file
+                    "src/Jaxis-Break-It/wwwroot/css/screen.css": "src/Jaxis-Break-It/wwwroot/css/screen.less",
+                    "src/Jaxis-Break-It/wwwroot/css/jaxi-edit.css": "src/Jaxis-Break-It/wwwroot/css/jaxi-edit.less" // destination file and source file
                 }
             }
         },
