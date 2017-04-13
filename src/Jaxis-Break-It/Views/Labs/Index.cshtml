@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="/css/jaxi-edit.css" type="text/css">
 </head>
 <body>
+    <script>
+        var arrTour = @(String.IsNullOrEmpty(Model.TourJSON) ? Html.Raw("[];") : Html.Raw(Model.TourJSON));
+    </script>
 
     <div id="app">
         <transition name="fade">
@@ -18,22 +21,21 @@
 
             </div>
         </transition>
+
+
+
+
+        <!-- Navbar -->
+        @Html.Partial("_Navbar")
     </div>
-    <script>
-        var arrTour = @(String.IsNullOrEmpty(Model.TourJSON) ? Html.Raw("[];") : Html.Raw(Model.TourJSON)) 
-    </script>
+        <!-- Sidebar -->
+        @Html.Partial("_Sidebar")
+
+        <!-- Editors -->
+        @Html.Partial("_Editors")
 
 
-    <!-- Navbar -->
-    @Html.Partial("_Navbar")
-
-    <!-- Sidebar -->
-    @Html.Partial("_Sidebar")
-
-    <!-- Editors -->
-    @Html.Partial("_Editors")
-
-
+    
 
 </body>
 </html>
