@@ -20,8 +20,19 @@
 
                     <li id="btnRun"><a href=""><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Run</a></li>
                     <li id="btnTidyUp"><a href=""><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> TidyUp</a></li>
-                    <li id="btnTogether"><a href=""><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Collaborate</a></li>
-                    <li id="btnMaker" v-if="labMode=='LAB_MODE_PLAYING'"><a href=""><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Lesson Maker</a></li>
+
+                        <li id="btnTogether" v-if="labMode!='LAB_MODE_MAKING'"><a href=""><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Collaborate</a></li>
+                        <li id="btnMaker" v-on:click="setMode($event, 'LAB_MODE_MAKING')" v-if="labMode=='LAB_MODE_PLAYING'"><a href=""><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Lesson Maker</a></li>
+                    
+                    <transition name="fade" :duration="{ enter: 500, leave: 0 }">
+                        <li id="btnExitMaker" v-on:click="setMode($event, 'LAB_MODE_PLAYING')" v-if="labMode=='LAB_MODE_MAKING'" style="margin-left:60px;"><a href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Exit</a></li>
+                    </transition>
+                    <transition name="fade" :duration="{ enter: 500, leave: 0 }">
+                        <li id="btnPreviewLesson" v-if="labMode=='LAB_MODE_MAKING'"><a href=""><span class="glyphicon glyphicon-film" aria-hidden="true"></span> Preview</a></li>
+                    </transition>
+                    <transition name="fade" :duration="{ enter: 500, leave: 0 }">
+                        <li id="btnShare" v-if="labMode=='LAB_MODE_MAKING'"><a href=""><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a></li>
+                    </transition>
                 </ul>
             }
 
@@ -38,5 +49,7 @@
 
         </div><!-- /.navbar-collapse -->
     </div>
-    
+
 </nav>
+
+

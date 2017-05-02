@@ -16,23 +16,23 @@
     </script>
 
     <div id="app">
-        <transition name="fade">
-            <div v-if="isShowing" class="jaxi-modal" v-bind:style="{left:modalLeft, top:modalTop}">
 
-            </div>
-        </transition>
 
 
 
 
         <!-- Navbar -->
         @Html.Partial("_Navbar")
+
+        <!-- Maker -->
+        @Html.Partial("_Maker")
     </div>
         <!-- Sidebar -->
         @Html.Partial("_Sidebar")
 
         <!-- Editors -->
         @Html.Partial("_Editors")
+    
 
 
     

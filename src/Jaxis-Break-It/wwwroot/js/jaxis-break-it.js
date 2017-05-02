@@ -10,7 +10,7 @@ var LAB_MODE_MAKING = "LAB_MODE_MAKING";
 
 //vue app
 var jaxi = new Object();
-var guide;
+var vue;
 jaxi.currentEditor = null;
 var tour;
 
@@ -24,23 +24,71 @@ $(document).ready(function($){
             template: '#childarea'
         };
 
-        guide = new Vue({
+        vue = new Vue({
             el: '#app',
             data() {
                 return {
                     isShowing: true,
                     labMode: LAB_MODE_PLAYING,
                     modalLeft: '0px',
-                    modalTop: '0px'
+                    modalTop: '0px',
+                    isNewStep: false
                 }
             },
             methods: {
                 toggleShow() {
                     this.isShowing = !this.isShowing;
                 },
-                setMode(mode){
+                setMode(e, mode){
+                    e.preventDefault();
+
                     this.labMode = mode;
+
+                    if(mode != LAB_MODE_MAKING)
+                    {
+                        $('.editors').css('height', '100vh');
+                        //$('.makerContainer').css('display', 'none');
+                        $(".editor").click();
+                    } else {
+                        $('.editors').css('height', '85vh');
+                        //$('.makerContainer').css('display', 'inline-block');
+                        $(".editor").click();
+                    }
+                },
+                editStep(e, stepId)
+                {
+                    e.preventDefault();
+
+                    isNewStep = stepId == undefined;
+
+                    var stepTitle;
+                    var stepText;
+                    if(!isNewStep)
+                    {
+                        stepTitle = $('#' + stepId).find('.stepTitle').text();
+                        stepText = $('#' + stepId).find('.stepText').text();
+                    } else {
+                        stepTitle = "";
+                        stepText = "";
+                    }
+                    $('#mdlStepTitle').val(stepTitle);
+                    $('#mdlStepText').text(stepText);
+
+                    $('#mdlEditStep').modal({
+                        show:true,
+                        backdrop: false
+                    });
+                },
+                saveStep(e)
+                {
+                    e.preventDefault();
+
+                    if(isNewStep)
+                    {
+                        alert('yay');
+                    }
                 }
+                
             },
             components: {
                 appChild: Child
@@ -65,7 +113,7 @@ $(document).ready(function($){
 
         if(arrTour.length > 0)
         {
-            guide.labMode = LAB_MODE_LEARNING;
+            vue.labMode = LAB_MODE_LEARNING;
             tour.addSteps(arrTour);
         }
         
@@ -85,7 +133,7 @@ $(document).ready(function($){
 
             if(step.content.indexOf('<code>') != -1)
             {
-                insertCode(step.content.substring(step.content.indexOf('<xmp>')+5, step.content.indexOf('</xmp>')));
+                insertCode(step.content.substring(step.content.indexOf('<xmp>')+5, step.content.indexOf('</xmp>')), step.row, step.col);
             }
 
             if(step.code !== undefined)
@@ -104,7 +152,7 @@ $(document).ready(function($){
 
         
         //FUNCTIONS////////////////////////////////////
-        function insertCode(code) {
+        function insertCode(code, row, col) {
             
             //make sure we don't add this code in the future.
             var stepNum = tour.getCurrentStep()+1;
@@ -112,7 +160,14 @@ $(document).ready(function($){
             {
                 codeTracker.steps.push(stepNum);
                 jaxi.currentEditor.focus();
-                jaxi.currentEditor.insert(code);
+                if(row != undefined && col != undefined)
+                {
+                    var position = {row:row, column:col};
+                    jaxi.currentEditor.session.insert(position, code)
+                } else {
+                    jaxi.currentEditor.insert(code);
+                }
+                
             }
         }
 
@@ -124,8 +179,8 @@ $(document).ready(function($){
             //jaxi.currentEditor.addSelectionMarker(range);
             await sleep(EDITOR_TRANSITION_TIME);
             var coords = jaxi.currentEditor.renderer.textToScreenCoordinates(range.start.row, range.end.column);
-            guide.modalLeft = coords.pageX + 5 + 'px';
-            guide.modalTop = coords.pageY + 8 + 'px';
+            vue.modalLeft = coords.pageX + 5 + 'px';
+            vue.modalTop = coords.pageY + 8 + 'px';
         }
 
         jaxi.pointAtSomething = pointAtSomething;

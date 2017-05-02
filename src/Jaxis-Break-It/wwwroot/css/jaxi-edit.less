@@ -5,7 +5,7 @@ body {
     font-size: 12px;
     line-height: 1.42857143;
     color: #333;
-    background-color: #fff;
+    background: @darkest-gray;
     overflow:hidden;
 }
 
@@ -17,8 +17,6 @@ body {
 .editors {
     margin: 0px 0px 0 0px;
     padding: 10px;
-    position: relative;
-    background: #111111;
     height: 100vh;
 }
 
@@ -31,6 +29,7 @@ body {
     margin-right: 5px;
     margin-bottom: 5px;
     position:relative;
+    display:inline-block;
 }
 
 .editorLabel{
@@ -51,6 +50,92 @@ body {
     float:right;
     width: 55%;
     bottom: 0px;
+    display:inline-block;
+}
+
+#mdlEditStep
+{
+    position: absolute;
+    right: 60px;
+    top:200px;
+    z-index:100;
+
+    textarea{
+        resize: none;
+        height: 220px
+    }
+}
+
+.makerContainer {
+    background-color: @dark-gray;
+    width:100%;
+    height:140px;
+    bottom: 0px; 
+    float:right;
+    //display:none;
+    margin-bottom: 10px;
+    border: 1px #cecece solid;
+    padding: 10px 10px 0px 10px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space:nowrap;
+
+    > div{
+        background-color: @turqois;
+        width:160px;
+        height:100%;
+        border: 1px #cecece solid;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        display:inline-block;
+        margin-right: 10px;
+    }
+
+    #newStep{
+        text-align:center;
+    }
+
+    .step{
+        cursor: pointer;
+        height: 100%;
+        float:left;
+        white-space:normal;
+        position:relative;
+        padding:10px;
+
+        h4{
+            color:black;
+            margin-top:18px;
+            margin-bottom:0px;
+        }
+
+        p{
+            font-weight:bold;
+            font-size:14px;
+        }
+
+        .stepTitle{
+            margin-bottom:10px;
+            margin: 0 auto;
+            top:5px;
+            clear:both;
+            font-weight:bold;
+        }
+
+        .stepText{
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .stepTags{
+            position:absolute;
+            bottom:8px;
+            right: 8px;
+        }
+    }
 }
 
 #preview {

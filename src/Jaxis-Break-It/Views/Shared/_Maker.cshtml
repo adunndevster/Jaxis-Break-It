@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNetCore.Mvc.Controllers
+@{
+
+    var controllerName = ((ControllerActionDescriptor)ViewContext.ActionDescriptor).ControllerName;
+    var isAuthed = Context.User.Identities.Any(i => i.IsAuthenticated);
+}
+
+
+<!-- Maker -->
+<transition name="fade">
+    <div v-if="labMode=='LAB_MODE_MAKING'" class="makerContainer">
+        
+        <div v-on:click="editStep($event, 'step1')" id="step1" class="step">
+            <div class="stepTitle">Step Title</div>
+            <div class="stepText">This is some of the lesson text. This is some of the lesson text. This is some of the lesson text. This is some of the lesson text. </div>
+            <div class="stepTags"><div class="badge">Code</div></div>
+        </div>
+        
+        <div v-on:click="editStep($event)" id="newStep" class="step">
+            <h4><b>+</b></h4>
+            <p>Add Step</p>
+        </div>
+
+
+
+    </div>
+</transition>
+
+
+<!-- Edit Step Modal -->
+<div class="fade" id="mdlEditStep" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>Title</div>
+
+                <input placeholder="Your title for this step..." id="mdlStepTitle" type="text" />
+
+                <div>Text</div>
+                <div>
+                    <textarea placeholder="Your description for this step of your lesson..." id="mdlStepText" rows="8"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Discard</button>
+                <button v-on:click="saveStep($event)" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tutorial Modal -->
+<div class="modal fade" id="mdlMaker" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
