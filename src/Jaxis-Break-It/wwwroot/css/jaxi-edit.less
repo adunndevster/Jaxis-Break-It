@@ -68,12 +68,10 @@ body {
 
 .makerContainer {
     background-color: @dark-gray;
-    width:100%;
+    width:calc(~"100% - 20px");
     height:140px;
     bottom: 0px; 
-    float:right;
-    //display:none;
-    margin-bottom: 10px;
+    margin: 0px 10px 10px 10px;
     border: 1px #cecece solid;
     padding: 10px 10px 0px 10px;
     overflow-y: hidden;
@@ -98,11 +96,11 @@ body {
 
     .step{
         cursor: pointer;
-        height: 100%;
-        float:left;
+        height: 120px;
         white-space:normal;
         position:relative;
         padding:10px;
+        vertical-align:top;
 
         h4{
             color:black;
@@ -136,6 +134,23 @@ body {
             right: 8px;
         }
     }
+
+    
+}
+
+.editorCodeSnippet{
+    float: left;
+    background-color: #ddddff;
+    width: 69%;
+    border-style: solid;
+    border-color: #ccccff;
+    height: 38px;
+    text-align: center;
+    padding: 9px 10px 0px 10px;
+    color: #9999ff;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 #preview {

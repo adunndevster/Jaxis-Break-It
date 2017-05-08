@@ -9,14 +9,8 @@
 <!-- Maker -->
 <transition name="fade">
     <div v-if="labMode=='LAB_MODE_MAKING'" class="makerContainer">
-        
-        <div v-on:click="editStep($event, 'step1')" id="step1" class="step">
-            <div class="stepTitle">Step Title</div>
-            <div class="stepText">This is some of the lesson text. This is some of the lesson text. This is some of the lesson text. This is some of the lesson text. </div>
-            <div class="stepTags"><div class="badge">Code</div></div>
-        </div>
-        
-        <div v-on:click="editStep($event)" id="newStep" class="step">
+        <step v-for="step in steps" :step="step" :key="step.id"></step>
+        <div v-on:click="createStep($event)" id="newStep" class="step">
             <h4><b>+</b></h4>
             <p>Add Step</p>
         </div>
@@ -40,10 +34,15 @@
                 <div>
                     <textarea placeholder="Your description for this step of your lesson..." id="mdlStepText" rows="8"></textarea>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Discard</button>
-                <button v-on:click="saveStep($event)" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                <div class="jaxi-btn-group">
+                    <div class="editorCodeSnippet" style="display:none;"></div>
+                    <button @@click="toggleCodeSelect" class="btn btn-default pull-right" type="button">{{btnCodeSelectText}}</button>
+                </div>
+                <hr />
+                <div class="jaxi-btn-group">
+                    <button v-on:click="saveStep($event)" type="button" class="btn btn-default pull-right" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Discard</button>
+                </div>
             </div>
         </div>
     </div>

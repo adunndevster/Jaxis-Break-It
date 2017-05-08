@@ -20,19 +20,58 @@ $(document).ready(function($){
     (function () {
 
         //VUE//////////////////////////////////////
-        const Child = {
-            template: '#childarea'
-        };
+        Vue.component('step', {
+            template: '#step',
+            props: ['step'],
+            data() {
+                return{
+                }
+            },
+            methods: {
+                editStep()
+                {
+
+                    isNewStep = false;
+
+                    $('#mdlStepTitle').val(this.step.title);
+                    $('#mdlStepText').val(this.step.text);
+                    $('.editorCodeSnippet').text(this.step.code);
+
+                    if(this.code)
+                    {
+                        $('.editorCodeSnippet').attr('style', 'display:inline-block;');
+                    }
+
+                    $('#mdlEditStep').modal({
+                        show:true,
+                        backdrop: false
+                    });
+
+                    vue.activeStep = vue.steps.indexOf(this.step);
+                },
+                killStep()
+                {
+                    //get the clicked item
+                    vue.steps.splice(vue.steps.indexOf(this.step), 1)
+                }
+            }
+        });
+
 
         vue = new Vue({
             el: '#app',
             data() {
                 return {
+                    steps: [],
                     isShowing: true,
                     labMode: LAB_MODE_PLAYING,
                     modalLeft: '0px',
                     modalTop: '0px',
-                    isNewStep: false
+                    isNewStep: false,
+                    isSelectingCode: false,
+                    btnCodeSelectText: 'Highlight Code',
+                    activeStep: -1,
+                    compiledTour: []
                 }
             },
             methods: {
@@ -55,43 +94,93 @@ $(document).ready(function($){
                         $(".editor").click();
                     }
                 },
-                editStep(e, stepId)
+                createStep(e)
                 {
                     e.preventDefault();
 
-                    isNewStep = stepId == undefined;
-
-                    var stepTitle;
-                    var stepText;
-                    if(!isNewStep)
-                    {
-                        stepTitle = $('#' + stepId).find('.stepTitle').text();
-                        stepText = $('#' + stepId).find('.stepText').text();
-                    } else {
-                        stepTitle = "";
-                        stepText = "";
-                    }
-                    $('#mdlStepTitle').val(stepTitle);
-                    $('#mdlStepText').text(stepText);
+                    $('#mdlStepTitle').val("");
+                    $('#mdlStepText').val("");
+                    $('.editorCodeSnippet').text("");
+                    $('.editorCodeSnippet').attr('style', 'display:none;');
 
                     $('#mdlEditStep').modal({
                         show:true,
                         backdrop: false
                     });
+
+                    isNewStep = true;
                 },
                 saveStep(e)
                 {
                     e.preventDefault();
 
+                    var newStepTitle = $('#mdlStepTitle').val();
+                    var newStepText = $('#mdlStepText').val();
+                    var newCode = $('.editorCodeSnippet').text();
+
                     if(isNewStep)
                     {
-                        alert('yay');
+                        var newStep = {title:newStepTitle, text:newStepText, code:newCode};
+                        this.steps.push(newStep);
+                    } else {
+                        //modify the existing step
+                        var stepId = $('#mdlEditStep').data('stepid');
+
+                        $('#' + stepId).find('.stepTitle').text(newStepTitle);
+                        $('#' + stepId).find('.stepText').text(newStepText);
+                        this.steps[this.activeStep].title = newStepTitle;
+                        this.steps[this.activeStep].text = newStepText;
+                        this.steps[this.activeStep].code = newCode;
                     }
+                },
+                toggleCodeSelect()
+                {
+                    this.isSelectingCode = !this.isSelectingCode;
+
+                    if(this.isSelectingCode)
+                    {
+                        $('.editorCodeSnippet').attr('style', 'display:none;');
+                        this.btnCodeSelectText = 'Finish Selecting...';
+                    } else {
+                        var code = jaxi.currentEditor.session.getTextRange(jaxi.currentEditor.getSelectionRange());
+
+                        $('.editorCodeSnippet').attr('style', 'display:inline-block;');
+                        $('.editorCodeSnippet').text(code);
+
+                        this.btnCodeSelectText = 'Highlight Code'
+                    }
+                },
+                saveAll()
+                {
+
+                    this.compiledTour = [];
+                    
+                    //compile all of the steps into a new tour
+                    for(var i=0; i<this.steps.length; i++)
+                    {
+                        var step = this.steps[i];
+                        var tourStep = new Object();
+                        
+                        tourStep.title = step.title;
+                        tourStep.content = step.text;
+
+                        if(step.code)
+                        {
+                            tourStep.code = step.code;
+                            tourStep.element = '.jaxi-modal';
+                            tourStep.delay = MODAL_TRANSITION_TIME;
+                        } else {
+                            tourStep.orphan = !0;
+                        }
+
+                    }
+
+                    this.compiledTour.push(tourStep);
+
+                    //save this.compiledTour to the server
+                    alert(JSON.stringify(this.compiledTour));
                 }
                 
-            },
-            components: {
-                appChild: Child
             }
         });
 
@@ -115,7 +204,14 @@ $(document).ready(function($){
         {
             vue.labMode = LAB_MODE_LEARNING;
             tour.addSteps(arrTour);
+
         }
+        //jaxi.currentEditor = ace.edit($('#htmlEditor').attr('id'));
+        //insertCode(htmlTour, 0, 0);
+        //jaxi.currentEditor = ace.edit($('#cssEditor').attr('id'));
+        //insertCode(cssTour, 0, 0);
+        //jaxi.currentEditor = ace.edit($('#jsEditor').attr('id'));
+        //insertCode(jsTour, 0, 0);
         
 
         

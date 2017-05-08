@@ -1,4 +1,6 @@
-﻿<div class="editors">
+﻿@model Jaxis_Break_It.Data.Lab
+
+<div class="editors">
     
     <!-- HTML Editor -->
     <!-- Preview -->
@@ -10,21 +12,27 @@
     <div class="editorContainer">
         <div class="editorLabel">HTML</div>
         <div class="editor" id="html-editor">
+            <xmp>
+                @(String.IsNullOrEmpty(Model.HTML) ? Html.Raw(String.Empty) : Html.Raw(Model.HTML))
+            </xmp>
         </div>
     </div>
     <!-- CSS EDitor -->
     <div class="editorContainer">
         <div class="editorLabel">CSS</div>
         <div class="editor" id="css-editor">
-            
-
+            <xmp>
+                @(String.IsNullOrEmpty(Model.CSS) ? Html.Raw(String.Empty) : Html.Raw(Model.CSS))
+            </xmp>
         </div>
     </div>
     <!-- JS Editor -->
     <div class="editorContainer">
         <div class="editorLabel">JavaScript</div>
         <div class="editor" id="js-editor">
-           
+            <xmp>
+                @(String.IsNullOrEmpty(Model.JS) ? Html.Raw(String.Empty) : Html.Raw(Model.JS))
+            </xmp>
         </div>
     </div>
 </div>

@@ -16,7 +16,11 @@
     </script>
 
     <div id="app">
+        <transition name="fade">
+            <div v-if="isShowing" class="jaxi-modal" v-bind:style="{left:modalLeft, top:modalTop}">
 
+            </div>
+        </transition>
 
 
 
@@ -27,15 +31,31 @@
         <!-- Maker -->
         @Html.Partial("_Maker")
     </div>
+
+
         <!-- Sidebar -->
         @Html.Partial("_Sidebar")
 
         <!-- Editors -->
-        @Html.Partial("_Editors")
+        @Html.Partial("_Editors", Model)
     
 
 
-    
+    <!-- Vue Templates -->
+    <!-- step card-->
+    <template id="step">
+        <div class="step">
+            <div @@click="editStep()" class="stepTitle">{{step.title}}</div>
+            <div @@click="editStep()" class="stepText">{{step.text}}</div>
+            <div class="stepTags"><div class="badge">Code</div></div>
+            @* Hidden values *@
+            <div style="display:none">
+                <div>{{step.code}}</div>
+            </div>
+            <a @@click="killStep($event, 'stepId}')" href="#" class="close-thin"></a>
+        </div>
+    </template>
+
 
 </body>
 </html>
