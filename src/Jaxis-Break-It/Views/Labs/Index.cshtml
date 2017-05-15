@@ -13,6 +13,10 @@
 <body>
     <script>
         var arrTour = @(String.IsNullOrEmpty(Model.TourJSON) ? Html.Raw("[];") : Html.Raw(Model.TourJSON));
+        var isCreator = @(ViewBag.IsCreator ? "true" : "false");
+        var labTitle = @(String.IsNullOrEmpty(Model.Title) ? Html.Raw("''") : Html.Raw("'" + Model.Title + "'"));
+        var labDescription = @(String.IsNullOrEmpty(Model.Description) ? Html.Raw("''") : Html.Raw("'" + Model.Description + "'"));
+        var labId = @Html.Raw(Model.Id);
     </script>
 
     <div id="app">
@@ -47,7 +51,7 @@
         <div class="step">
             <div @@click="editStep()" class="stepTitle">{{step.title}}</div>
             <div @@click="editStep()" class="stepText">{{step.text}}</div>
-            <div class="stepTags"><div class="badge">Code</div></div>
+            <div class="stepTags"><div class="badge" v-if="step.code">Code</div></div>
             @* Hidden values *@
             <div style="display:none">
                 <div>{{step.code}}</div>

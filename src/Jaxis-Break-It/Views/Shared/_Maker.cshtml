@@ -8,15 +8,21 @@
 
 <!-- Maker -->
 <transition name="fade">
-    <div v-if="labMode=='LAB_MODE_MAKING'" class="makerContainer">
-        <step v-for="step in steps" :step="step" :key="step.id"></step>
-        <div v-on:click="createStep($event)" id="newStep" class="step">
-            <h4><b>+</b></h4>
-            <p>Add Step</p>
+    <div v-if="labMode=='LAB_MODE_MAKING'">
+        <div class="makerTitleContainer">
+            <input id="txtTitle" type="text" placeholder="Title" :value="labTitle" />
+            <input id="txtDescription" type="text" placeholder="Briefly describe your lab..." :value="labDescription"/>
         </div>
+        <div class="makerContainer">
+            <step v-for="step in steps" :step="step" :key="step.id"></step>
+            <div v-on:click="createStep($event)" id="newStep" class="step">
+                <h4><b>+</b></h4>
+                <p>Add Step</p>
+            </div>
 
 
 
+        </div>
     </div>
 </transition>
 

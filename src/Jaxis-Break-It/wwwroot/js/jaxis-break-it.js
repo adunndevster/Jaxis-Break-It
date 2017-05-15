@@ -37,9 +37,11 @@ $(document).ready(function($){
                     $('#mdlStepText').val(this.step.text);
                     $('.editorCodeSnippet').text(this.step.code);
 
-                    if(this.code)
+                    if(this.step.code)
                     {
                         $('.editorCodeSnippet').attr('style', 'display:inline-block;');
+                    } else {
+                        $('.editorCodeSnippet').attr('style', 'display:none;');
                     }
 
                     $('#mdlEditStep').modal({
@@ -62,6 +64,8 @@ $(document).ready(function($){
             el: '#app',
             data() {
                 return {
+                    labTitle: '',
+                    labDescription: '',
                     steps: [],
                     isShowing: true,
                     labMode: LAB_MODE_PLAYING,
@@ -132,6 +136,11 @@ $(document).ready(function($){
                         this.steps[this.activeStep].text = newStepText;
                         this.steps[this.activeStep].code = newCode;
                     }
+
+                    this.saveAll();
+
+                    //clear the code
+                    $('.editorCodeSnippet').text('');
                 },
                 toggleCodeSelect()
                 {
@@ -173,12 +182,29 @@ $(document).ready(function($){
                             tourStep.orphan = !0;
                         }
 
+                        this.compiledTour.push(tourStep);
+
                     }
 
-                    this.compiledTour.push(tourStep);
-
                     //save this.compiledTour to the server
-                    alert(JSON.stringify(this.compiledTour));
+                    var css    = ace.edit("css-editor").getSession().getValue();
+                    var script = ace.edit("js-editor").getSession().getValue();
+                    var html   = ace.edit("html-editor").getSession().getValue();
+
+                    var lab = new Object({
+                        Id: labId,
+                        Title: $('#txtTitle').val(),
+                        Description: $('#txtDescription').val(),
+                        HTML: html,
+                        CSS: css,
+                        JS: script,
+                        TourJSON: JSON.stringify(this.compiledTour)
+                    });
+
+                    this.$http.post('/labs/savelab', lab, {
+                        emulateJSON: true
+                    })
+
                 }
                 
             }
@@ -205,14 +231,30 @@ $(document).ready(function($){
             vue.labMode = LAB_MODE_LEARNING;
             tour.addSteps(arrTour);
 
+            //populate the maker if the creator is visiting the page...
+            if(isCreator)
+            {
+                vue.labTitle = labTitle;
+                vue.labDescription = labDescription;
+                
+                for(var i = 0; i<arrTour.length; i++)
+                {
+                    var step = new Object()
+                    var tourStep = arrTour[i];
+                        
+                    step.title = tourStep.title;
+                    step.text = tourStep.content;
+
+                    if(tourStep.code)
+                    {
+                        step.code = tourStep.code;
+                    }
+
+                    vue.steps.push(step);
+                }
+            }
+
         }
-        //jaxi.currentEditor = ace.edit($('#htmlEditor').attr('id'));
-        //insertCode(htmlTour, 0, 0);
-        //jaxi.currentEditor = ace.edit($('#cssEditor').attr('id'));
-        //insertCode(cssTour, 0, 0);
-        //jaxi.currentEditor = ace.edit($('#jsEditor').attr('id'));
-        //insertCode(jsTour, 0, 0);
-        
 
         
         function onHide(tour)

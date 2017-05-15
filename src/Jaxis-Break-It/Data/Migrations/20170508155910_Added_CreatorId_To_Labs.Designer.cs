@@ -8,9 +8,10 @@ using Jaxis_Break_It.Data;
 namespace Jaxis_Break_It.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170508155910_Added_CreatorId_To_Labs")]
+    partial class Added_CreatorId_To_Labs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

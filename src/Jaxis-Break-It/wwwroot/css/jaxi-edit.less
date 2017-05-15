@@ -66,6 +66,38 @@ body {
     }
 }
 
+.makerTitleContainer{
+    background-color: @dark-gray;
+    width:calc(~"100% - 20px");
+    height:40px;
+    margin: 10px 10px 0px 10px;
+    border: 1px #cecece solid;
+    border-bottom-style:none;
+    padding: 10px 10px 0px 10px;
+
+    #txtTitle{
+        width:300px;
+        float:left;
+        margin-right:20px;
+    }
+    #txtDescription{
+        float:left;
+        width:650px
+    }
+
+    input {
+        height:24px;
+        border:none;
+        color:white;
+        background: @darkest-gray;
+        padding: 5px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    
+}
+}
+
 .makerContainer {
     background-color: @dark-gray;
     width:calc(~"100% - 20px");
@@ -73,6 +105,7 @@ body {
     bottom: 0px; 
     margin: 0px 10px 10px 10px;
     border: 1px #cecece solid;
+    border-top-style:none;
     padding: 10px 10px 0px 10px;
     overflow-y: hidden;
     overflow-x: scroll;
