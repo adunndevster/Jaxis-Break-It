@@ -22,17 +22,17 @@
                     <li id="btnTidyUp"><a href=""><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> TidyUp</a></li>
 
                     <li id="btnTogether" v-if="labMode!='LAB_MODE_MAKING'"><a href=""><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Collaborate</a></li>
-                        
+
                     @if (ViewBag.IsCreator)
                     {
-                        <li id="btnMaker" v-on:click="setMode($event, 'LAB_MODE_MAKING')" ><a href=""><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Lesson Maker</a></li>
+                        <li id="btnMaker" v-on:click="setMode($event, 'LAB_MODE_MAKING')"><a href=""><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Lesson Maker</a></li>
                     }
                     else
                     {
                         <li id="btnMaker" v-on:click="setMode($event, 'LAB_MODE_MAKING')" v-if="labMode=='LAB_MODE_PLAYING'"><a href=""><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Lesson Maker</a></li>
                     }
-                    
-                    
+
+
                     <transition name="fade" :duration="{ enter: 500, leave: 0 }">
                         <li id="btnExitMaker" v-on:click="setMode($event, 'LAB_MODE_PLAYING')" v-if="labMode=='LAB_MODE_MAKING'" style="margin-left:60px;"><a href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Exit</a></li>
                     </transition>
@@ -48,11 +48,28 @@
             <div class="right-nav">
                 @if (isAuthed)
             {
-                    <img class="user-image" src="~/images/ui/user-icon.png">
+                    <div class="nav-drop dropdown disabled user" data-toggle="dropdown">
+                        <img id="btnAccount" class="user-image" src="~/images/ui/user-icon.png">
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="user-details">
+                                <strong>@User.Identity.Name</strong>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li><a href="@Url.Action("Index", "AdminLabs")">Admin</a></li>
+                            }
+                            <li>
+                                <a href="javascript:$('#frmLogOff').submit()">Sign out</a>
+                                <form id="frmLogOff" method="post" asp-controller="Account" asp-action="LogOff">
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+
                 }
                 else
                 {
-                    <a href="/account/login" class="button">Sign in</a>
+                    <a id="btnSignIn" href="/account/login?returnurl=@Context.Request.Path" class="button" data-content="Sign In to save and share your lab!">Sign in</a>
                 }
             </div>
 

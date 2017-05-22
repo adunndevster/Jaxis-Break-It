@@ -9,6 +9,11 @@
 <head>
     @Html.Partial("_Header")
     <link rel="stylesheet" href="/css/jaxi-edit.css" type="text/css">
+
+    <!-- JSTinker Scripts -->
+    <script src="~/js/jaxis-break-it.js"></script>
+    <script src="/js/jaxi-edit.js"></script>
+    
 </head>
 <body>
     <script>
@@ -17,6 +22,7 @@
         var labTitle = @(String.IsNullOrEmpty(Model.Title) ? Html.Raw("''") : Html.Raw("'" + Model.Title + "'"));
         var labDescription = @(String.IsNullOrEmpty(Model.Description) ? Html.Raw("''") : Html.Raw("'" + Model.Description + "'"));
         var labId = @Html.Raw(Model.Id);
+        var isAuthed = @(Context.User.Identity.IsAuthenticated ? "true" : "false");
     </script>
 
     <div id="app">

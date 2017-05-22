@@ -6,6 +6,8 @@ var LAB_MODE_LEARNING = "LAB_MODE_LEARNING";
 var LAB_MODE_PLAYING = "LAB_MODE_PLAYING";
 var LAB_MODE_MAKING = "LAB_MODE_MAKING";
 
+//sessionStorage notes:
+//sessionStorage.lab
 
 
 //vue app
@@ -18,7 +20,7 @@ var tour;
 
 $(document).ready(function($){
     (function () {
-
+        
         //VUE//////////////////////////////////////
         Vue.component('step', {
             template: '#step',
@@ -161,7 +163,7 @@ $(document).ready(function($){
                 },
                 saveAll()
                 {
-
+                
                     this.compiledTour = [];
                     
                     //compile all of the steps into a new tour
@@ -193,17 +195,23 @@ $(document).ready(function($){
 
                     var lab = new Object({
                         Id: labId,
-                        Title: $('#txtTitle').val(),
-                        Description: $('#txtDescription').val(),
+                        Title: this.labTitle,
+                        Description: this.labDescription,
                         HTML: html,
                         CSS: css,
                         JS: script,
                         TourJSON: JSON.stringify(this.compiledTour)
                     });
 
-                    this.$http.post('/labs/savelab', lab, {
-                        emulateJSON: true
-                    })
+                    sessionStorage.lab = JSON.stringify(lab);
+
+                    if(isAuthed && isCreator && this.labTitle)
+                    {
+                        this.$http.post('/labs/savelab', lab, {
+                            emulateJSON: true
+                        })
+                    }
+                    
 
                 }
                 
@@ -226,7 +234,24 @@ $(document).ready(function($){
                 onHide: onHide
             });
 
-        if(arrTour.length > 0)
+        //populate from the sessionStorage if necessary
+        var url = window.location.href.lastIndexOf("/") == window.location.href.length - 1 ? window.location.href.substring(0, window.location.href.length - 1) : window.location.href;
+        var urlSuffix = url.split("/").reverse()[0].toLowerCase();
+       
+        if(urlSuffix.indexOf("labs") > -1 && sessionStorage.lab != null)
+        {
+            var lab = JSON.parse(sessionStorage.lab);
+            arrTour = JSON.parse(lab.TourJSON);
+            labTitle = lab.Title;
+            labDescription = lab.Description;
+            alert(lab.HTML);
+            ace.edit("html-editor").getSession().setValue(lab.HTML);
+            ace.edit("css-editor").getSession().setValue(lab.CSS);
+            ace.edit("js-editor").getSession().setValue(lab.JS);
+
+        }
+
+        if(arrTour != undefined && arrTour.length > 0)
         {
             vue.labMode = LAB_MODE_LEARNING;
             tour.addSteps(arrTour);
@@ -325,6 +350,8 @@ $(document).ready(function($){
         jaxi.insertCode = insertCode;
 
 
+       
+
     })();
 
 });
@@ -335,3 +362,5 @@ $(document).ready(function($){
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+

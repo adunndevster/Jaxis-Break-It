@@ -129,8 +129,7 @@ namespace Jaxis_Break_It.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()

@@ -10,8 +10,8 @@
 <transition name="fade">
     <div v-if="labMode=='LAB_MODE_MAKING'">
         <div class="makerTitleContainer">
-            <input id="txtTitle" type="text" placeholder="Title" :value="labTitle" />
-            <input id="txtDescription" type="text" placeholder="Briefly describe your lab..." :value="labDescription"/>
+            <input id="txtTitle" type="text" placeholder="Enter a title..." v-model="labTitle" />
+            <input id="txtDescription" type="text" placeholder="Briefly describe your lab..." v-model="labDescription"/>
         </div>
         <div class="makerContainer">
             <step v-for="step in steps" :step="step" :key="step.id"></step>
