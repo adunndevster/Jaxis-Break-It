@@ -6,9 +6,11 @@
 <html lang="en">
 <head>
     @Html.Partial("_Header")
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="~/js/animations/JaxiTeam_Canvas.js"></script>
 
 </head>
-<body>
+<body  onload="init();">
 
 
     <!-- Navbar -->
@@ -21,7 +23,42 @@
                 <img src="~/images/Logo.svg" />
             </div>
             <div class="col-md-6">
-                <h2>Jaxi's Break It is an interactive way to learn to code.</h2>
+                <h2>"Jaxi's Break It" is an interactive way to learn to code.</h2>
+
+                <!--animation-->
+                <script>
+                var canvas, stage, exportRoot;
+                function init() {
+	                // --- write your JS code here ---
+                    canvas = document.getElementById("teamJaxi");
+	                images = images||{};
+
+	                var loader = new createjs.LoadQueue(false);
+	                loader.addEventListener("fileload", handleFileLoad);
+	                loader.addEventListener("complete", handleComplete);
+	                loader.loadManifest(lib.properties.manifest);
+                }
+
+                function handleFileLoad(evt) {
+	                if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+                }
+
+                function handleComplete(evt) {
+	                exportRoot = new lib.JaxiTeam_Canvas();
+
+	                stage = new createjs.Stage(canvas);
+	                stage.addChild(exportRoot);
+	                stage.update();
+
+	                createjs.Ticker.setFPS(lib.properties.fps);
+	                createjs.Ticker.addEventListener("tick", stage);
+                }
+
+                </script>
+                <div>
+                    <canvas id="teamJaxi" width="380" height="362" style="background-color:#000000"></canvas>
+                </div>
+
             </div>
         </div>
 

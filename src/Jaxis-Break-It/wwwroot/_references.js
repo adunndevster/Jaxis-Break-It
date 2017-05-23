@@ -358,6 +358,7 @@
 /// <reference path="js/ace-backup/worker-css.js" />
 /// <reference path="js/ace-backup/worker-html.js" />
 /// <reference path="js/ace-backup/worker-javascript.js" />
+/// <reference path="js/animations/jaxiteam_canvas.js" />
 /// <reference path="js/beautify-web/beautify.js" />
 /// <reference path="js/beautify-web/beautify-css.js" />
 /// <reference path="js/beautify-web/beautify-html.js" />
