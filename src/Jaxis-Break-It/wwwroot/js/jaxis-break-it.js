@@ -1,4 +1,53 @@
-﻿//global vars
+﻿//jquery done typing plugin
+//
+// $('#element').donetyping(callback[, timeout=1000])
+// Fires callback when a user has finished typing. This is determined by the time elapsed
+// since the last keystroke and timeout parameter or the blur event--whichever comes first.
+//   @callback: function to be called when even triggers
+//   @timeout:  (default=1000) timeout, in ms, to to wait before triggering event if not
+//              caused by blur.
+// Requires jQuery 1.7+
+//
+;(function($){
+    $.fn.extend({
+        donetyping: function(callback,timeout){
+            timeout = timeout || 1e3; // 1 second default timeout
+            var timeoutReference,
+                doneTyping = function(el){
+                    if (!timeoutReference) return;
+                    timeoutReference = null;
+                    callback.call(el);
+                };
+            return this.each(function(i,el){
+                var $el = $(el);
+                // Chrome Fix (Use keyup over keypress to detect backspace)
+                // thank you @palerdot
+                $el.on('keyup keypress paste',function(e){
+                    // This catches the backspace button in chrome, but also prevents
+                    // the event from triggering too preemptively. Without this line,
+                    // using tab/shift+tab will make the focused element fire the callback.
+                    if (e.type=='keyup' && e.keyCode!=8) return;
+                    
+                    // Check if timeout has been set. If it has, "reset" the clock and
+                    // start over again.
+                    if (timeoutReference) clearTimeout(timeoutReference);
+                    timeoutReference = setTimeout(function(){
+                        // if we made it here, our timeout has elapsed. Fire the
+                        // callback
+                        doneTyping(el);
+                    }, timeout);
+                }).on('blur',function(){
+                    // If we can, fire the event since we're leaving the field
+                    doneTyping(el);
+                });
+            });
+        }
+    });
+})(jQuery);
+
+
+
+//global vars
 var EDITOR_TRANSITION_TIME = 300;
 var MODAL_TRANSITION_TIME = 300;
 var MODAL_LEFT = 400;
@@ -8,6 +57,9 @@ var LAB_MODE_MAKING = "LAB_MODE_MAKING";
 
 //sessionStorage notes:
 //sessionStorage.lab
+
+//localStorage notes:
+//localStorage.hasSeenTutorial
 
 
 //vue app
@@ -94,10 +146,38 @@ $(document).ready(function($){
                         $('.editors').css('height', '100vh');
                         //$('.makerContainer').css('display', 'none');
                         $(".editor").click();
+
+                        
                     } else {
                         $('.editors').css('height', '85vh');
                         //$('.makerContainer').css('display', 'inline-block');
                         $(".editor").click();
+
+
+                        if(localStorage.hasSeenTutorial != "true")
+                        {
+                            //show the lesson maker tutorial
+                            $('#mdlTutorial').modal({
+                                show:true,
+                                backdrop: true
+                            });
+
+                            localStorage.hasSeenTutorial = true;
+                        }
+
+
+                        //add the onchange listeners
+                        $("#html-editor").donetyping(function(){
+                            vue.saveAll();
+                        });
+                        $("#css-editor").donetyping(function(){
+                            vue.saveAll();
+                        });
+                        $("#js-editor").donetyping(function(){
+                            vue.saveAll();
+                        });
+
+
                     }
                 },
                 createStep(e)
@@ -207,8 +287,8 @@ $(document).ready(function($){
 
                     if(isAuthed && isCreator && this.labTitle)
                     {
-                        this.$http.post('/labs/savelab', lab, {
-                            emulateJSON: true
+                        $.post('/labs/savelab', lab, function(data){
+                            labId = data.id;
                         })
                     }
                     
@@ -244,7 +324,7 @@ $(document).ready(function($){
             arrTour = JSON.parse(lab.TourJSON);
             labTitle = lab.Title;
             labDescription = lab.Description;
-            alert(lab.HTML);
+
             ace.edit("html-editor").getSession().setValue(lab.HTML);
             ace.edit("css-editor").getSession().setValue(lab.CSS);
             ace.edit("js-editor").getSession().setValue(lab.JS);
@@ -362,5 +442,10 @@ $(document).ready(function($){
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
+
+
+
 
 

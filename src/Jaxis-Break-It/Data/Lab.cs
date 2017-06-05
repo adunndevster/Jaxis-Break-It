@@ -27,19 +27,31 @@ namespace Jaxis_Break_It.Data
         [StringLength(128)]
         public string Slug { get; set; }
 
-        [StringLength(8192)]
+        [StringLength(32768)]
         public string HTML { get; set; }
 
-        [StringLength(8192)]
+        [StringLength(32768)]
         public string CSS { get; set; }
 
-        [StringLength(8192)]
+        [StringLength(32768)]
         public string JS { get; set; }
 
-        [StringLength(8192)]
+        [StringLength(32768)]
         public string TourJSON { get; set; }
 
         [ForeignKey("CreatorId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public void UpdateAccessibleFromSource(Lab lab)
+        {
+            this.CreatorId = lab.CreatorId;
+            this.CSS = lab.CSS;
+            this.Description = lab.Description;
+            this.HTML = lab.HTML;
+            this.Slug = lab.Slug;
+            this.Title = lab.Title;
+            this.TourJSON = lab.TourJSON;
+            this.JS = lab.JS;
+        }
     }
 }

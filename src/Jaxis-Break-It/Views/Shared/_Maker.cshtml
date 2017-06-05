@@ -33,15 +33,16 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div>Title</div>
-
                 <input placeholder="Your title for this step..." id="mdlStepTitle" type="text" />
-
+                <br /><br />
                 <div>Text</div>
                 <div>
                     <textarea placeholder="Your description for this step of your lesson..." id="mdlStepText" rows="8"></textarea>
                 </div>
+                <br />
                 <div class="jaxi-btn-group">
                     <div class="editorCodeSnippet" style="display:none;"></div>
+                    <br />
                     <button @@click="toggleCodeSelect" class="btn btn-default pull-right" type="button">{{btnCodeSelectText}}</button>
                 </div>
                 <hr />
@@ -55,15 +56,62 @@
 </div>
 
 <!-- Tutorial Modal -->
-<div class="modal fade" id="mdlMaker" role="dialog">
+<div class="modal fade" id="mdlTutorial" role="dialog">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-body">
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+                <div id="cslTutorial" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#cslTutorial" data-slide-to="0" class="active"></li>
+                        <li data-target="#cslTutorial" data-slide-to="1"></li>
+                        <li data-target="#cslTutorial" data-slide-to="2"></li>
+                        <li data-target="#cslTutorial" data-slide-to="3"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <h3>1. Make a working program</h3>
+                            <img src="~/images/tutorial/step1.png" />
+                            <p> First, make sure you have a working program. Lesson Maker will help you teach others how your program works.</p>
+                        </div>
+
+                        <div class="item">
+                            <h3>2. Add your lesson steps</h3>
+                            <img src="~/images/tutorial/step2.png"/>
+                            <p>Use the Lesson Maker toolbar to add or remove lesson steps. You can write the content for each step, and if you want, select code you want to explain or highlight.</p>
+                        </div>
+
+                        <div class="item">
+                            <h3>3. Preview your lesson</h3>
+                            <img src="~/images/tutorial/preview.PNG" />
+                            <p> Click the preview button to see your lesson in action.</p>
+                        </div>
+
+                        <div class="item">
+                            <h3>4. Autosave is ON</h3>
+                            
+                            <p>As you are working on your project, we will be saving your progress.</p>
+                        </div>
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#cslTutorial" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#cslTutorial" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                
+                <div class="jaxi-btn-group">
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Done</button>
+                 </div>
+                </div>
         </div>
     </div>
 </div>

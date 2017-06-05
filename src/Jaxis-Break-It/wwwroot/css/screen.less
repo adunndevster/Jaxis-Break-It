@@ -107,3 +107,102 @@ hr.big {
 .close-thin:after {
   content: '×'; /* UTF-8 symbol */
 }
+
+
+/*Bootstrap carousel*/
+.carousel{
+    margin-bottom:60px;
+    text-align:left;
+
+    h3{
+        color:@dark-purple;
+        font-size:30px;
+    }
+
+    p{
+        font-size:16px;
+        font-weight:500;
+        margin-top:20px;
+    }
+
+    .carousel-inner
+    {
+        max-width:80%;
+        text-align:center;
+        margin: 0 auto;
+
+    }
+
+    .carousel-indicators{
+        bottom:-60px;
+
+
+        li{
+            background-color:@light-purple;
+            width:12px;
+            height:12px;
+            border:none;
+            margin-left:10px;
+            margin-right:10px; 
+        }
+
+        .active{
+            margin:1px;
+            margin-left:10px;
+            margin-right:10px; 
+            background-color:@darkest-purple;
+        }
+    }
+
+
+    .carousel-control.right{
+        background:none;
+        color:@darkest-purple;
+        
+        img{
+            height:60px;
+        }
+    }
+
+    .carousel-control.left{
+        background:none;
+        color:@darkest-purple;
+
+        img{
+            height:60px; 
+        }
+    }
+}
+
+/*Bootstrap Button*/
+.btn-default{
+    border: none;
+    background-color: @darkest-purple;
+    color:white;
+    font-weight:400;
+    margin-left:6px;
+}
+
+/*Bootstrap Modal*/
+.modal-content{
+    background-color:@dark-gray;
+    color:white;
+    border-style:solid;
+    border-width:1px;
+    border-color:#cecece;
+
+    .modal-body{
+        input, textarea {
+            height:24px;
+            border:none;
+            color:white;
+            background: @darkest-gray;
+            padding: 5px;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+    
+        }
+    }
+    
+}

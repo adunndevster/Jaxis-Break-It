@@ -76,16 +76,19 @@ namespace Jaxis_Break_It.Controllers
                 //see if the lab already exists. If so, update
                 if (lab.Id != 0)
                 {
+                    lab.CreatorId = creatorId;
                     var existingLab = await _context.Labs.Where(oo => oo.Id == lab.Id).FirstOrDefaultAsync();
                     //check to make sure the student is logged in, and it is the lab owner
                     if (existingLab.CreatorId != creatorId)
                     {
-                        return Content("{'success':'false','reason':'unathorized'}");
+                        return Json(new {success=false, reason="unauthorized"});
                     }
+                    //let's turn the title into a unique slug
+                    lab.Slug = Regex.Replace(lab.Title, @"[^A-Za-z0-9_\.~]+", "-");
 
-                    existingLab = lab;
+                    existingLab.UpdateAccessibleFromSource(lab);
 
-                    _context.Update(existingLab);
+                    await _context.SaveChangesAsync();
                 }
                 else
                 {
@@ -100,11 +103,11 @@ namespace Jaxis_Break_It.Controllers
                 
 
                 await _context.SaveChangesAsync();
-                return Content("{'success':'true','id':'" + lab.Id + "'}");
+                return Json(new { success = true, id = lab.Id});
             }
             else
             {
-                return Content("{'success':'false','reason':'invalid'}");
+                return Json(new { success = false, reason = "invalid" });
             }
         }
 

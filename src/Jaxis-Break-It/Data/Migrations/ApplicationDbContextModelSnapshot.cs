@@ -22,7 +22,7 @@ namespace Jaxis_Break_It.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CSS")
-                        .HasAnnotation("MaxLength", 8192);
+                        .HasAnnotation("MaxLength", 32768);
 
                     b.Property<string>("CreatorId")
                         .HasAnnotation("MaxLength", 450);
@@ -31,10 +31,10 @@ namespace Jaxis_Break_It.Data.Migrations
                         .HasAnnotation("MaxLength", 1024);
 
                     b.Property<string>("HTML")
-                        .HasAnnotation("MaxLength", 8192);
+                        .HasAnnotation("MaxLength", 32768);
 
                     b.Property<string>("JS")
-                        .HasAnnotation("MaxLength", 8192);
+                        .HasAnnotation("MaxLength", 32768);
 
                     b.Property<string>("Slug")
                         .HasAnnotation("MaxLength", 128);
@@ -43,7 +43,7 @@ namespace Jaxis_Break_It.Data.Migrations
                         .HasAnnotation("MaxLength", 255);
 
                     b.Property<string>("TourJSON")
-                        .HasAnnotation("MaxLength", 8192);
+                        .HasAnnotation("MaxLength", 32768);
 
                     b.HasKey("Id");
 
